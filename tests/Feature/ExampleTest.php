@@ -10,4 +10,9 @@ class ExampleTest extends TestCase
     {
         $this->get('/')->assertSuccessful();
     }
+
+    public function test_the_checkout_page_returns_a_successful_response(): void
+    {
+        $this->get('/checkout')->assertSuccessful();
+    }
 }
