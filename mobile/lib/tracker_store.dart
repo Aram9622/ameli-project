@@ -58,8 +58,8 @@ class ActiveTimer {
     final wasRunning = runningSince != null;
     final oldSide = side;
     pause(now);
-    if (newSide != null) side = newSide;
-    if (!wasRunning || (newSide != null && newSide != oldSide)) runningSince = now;
+    if (newSide != null) { side = newSide; }
+    if (!wasRunning || (newSide != null && newSide != oldSide)) { runningSince = now; }
   }
   Map<String, dynamic> toJson() => {'type': type, 'start': start.toIso8601String(),
     'savedMs': savedMs, 'leftMs': leftMs, 'rightMs': rightMs, 'side': side,
@@ -116,7 +116,7 @@ class TrackerStore extends ChangeNotifier {
     !entry.start.isAfter(now) && categories.contains(entry.type)).toList()
     ..sort((a, b) => b.start.compareTo(a.start));
   Future<void> toggleTimer(String type, [String? side]) async {
-    if (timer != null && timer!.type != type) throw StateError('Завершите текущий таймер.');
+    if (timer != null && timer!.type != type) { throw StateError('Завершите текущий таймер.'); }
     final now = DateTime.now().toUtc();
     timer ??= ActiveTimer(type: type, start: now);
     timer!.toggle(now, side);
@@ -124,7 +124,7 @@ class TrackerStore extends ChangeNotifier {
   }
   Future<bool> finishTimer(String note) async {
     final active = timer;
-    if (active == null || active.elapsed(DateTime.now().toUtc()) < 1) return false;
+    if (active == null || active.elapsed(DateTime.now().toUtc()) < 1) { return false; }
     active.pause(DateTime.now().toUtc());
     entries.add(TrackerEntry(id: DateTime.now().microsecondsSinceEpoch.toString(), type: active.type,
       start: active.start, seconds: active.savedMs ~/ 1000,

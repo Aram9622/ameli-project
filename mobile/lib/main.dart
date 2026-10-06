@@ -377,7 +377,7 @@ class _ProfileFormState extends State<ProfileForm> {
       if (!form.currentState!.validate()) return;
       widget.store.childName = name.text.trim(); widget.store.birthday = birthday?.toIso8601String();
       await widget.store.persist();
-      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Профиль сохранён')));
+      if (context.mounted) { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Профиль сохранён'))); }
     }, child: const Text('Сохранить профиль')),
     const SizedBox(height: 24), const Text('Тестовая версия: данные хранятся только на этом устройстве. Аккаунт и синхронизация с сайтом пока не подключены. Удаление приложения удаляет локальные записи.', style: TextStyle(color: Colors.white70)),
   ]));
