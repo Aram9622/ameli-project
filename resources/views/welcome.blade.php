@@ -100,7 +100,6 @@
                 <article class="price-card"><span class="plan-name">Месяц</span><div class="price"><strong>399 ₽</strong><span>/ месяц</span></div><p>Для знакомства со всеми возможностями.</p><ul><li>Все трекеры</li><li>Подробные отчёты</li><li>До 2 профилей</li></ul><a class="button button--outline" href="{{ route('checkout', ['plan' => 'month']) }}">Выбрать месяц</a></article>
                 <article class="price-card price-card--popular"><div class="popular-label">Выгодно</div><span class="plan-name">Год</span><div class="price"><strong>2 990 ₽</strong><span>/ год</span></div><p>249 ₽ в месяц — экономия 37%.</p><ul><li>Всё из тарифа «Месяц»</li><li>Семейный доступ</li><li>Приоритетная поддержка</li></ul><a class="button button--primary" href="{{ route('checkout', ['plan' => 'year']) }}">Попробовать 7 дней</a></article>
             </div>
-            <p class="payment-note">Безопасная оплата · МИР, Visa, Mastercard · Отмена в один клик</p>
         </section>
 
         <section class="final-cta section-shell">

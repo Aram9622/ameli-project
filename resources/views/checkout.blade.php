@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Оформление подписки Ameli.">
-    <title>Оформление подписки — Ameli</title>
+    <meta name="description" content="Знакомство с Ameli.">
+    <title>Попробовать Ameli</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="checkout-page">
@@ -14,30 +14,25 @@
         <div class="checkout-grid">
             <section class="checkout-form">
                 <div class="eyebrow"><span></span> Почти готово</div>
-                <h1>Оформление подписки</h1>
-                <p>Первое списание — после 7 бесплатных дней. Напомним заранее.</p>
+                <h1>Попробовать Ameli</h1>
+                <p>Оставьте свои данные для знакомства с Ameli.</p>
                 <form action="#" method="post" data-checkout-form>
                     @csrf
                     <fieldset>
-                        <legend>1. Ваши данные</legend>
+                        <legend>Ваши данные</legend>
                         <label>Имя<input type="text" name="name" autocomplete="name" placeholder="Анна" required></label>
                         <label>Email<input type="email" name="email" autocomplete="email" placeholder="anna@example.ru" required></label>
                     </fieldset>
-                    <fieldset>
-                        <legend>2. Способ оплаты</legend>
-                        <div class="payment-placeholder"><div><span>МИР</span><span>VISA</span><span>MC</span></div><p>Платёжная форма появится после подключения выбранного эквайринга.</p></div>
-                    </fieldset>
-                    <label class="agreement"><input type="checkbox" required><span>Я принимаю условия подписки и политику конфиденциальности</span></label>
-                    <button class="button button--primary checkout-button" type="submit">Перейти к оплате <span>→</span></button>
-                    <p class="form-message" role="status" hidden>Спасибо! Форма готова — осталось подключить платёжного провайдера.</p>
+                    <label class="agreement"><input type="checkbox" required><span>Я принимаю условия использования и политику конфиденциальности</span></label>
+                    <button class="button button--primary checkout-button" type="submit">Продолжить <span>→</span></button>
+                    <p class="form-message" role="status" hidden>Форма пока демонстрационная. Данные не отправляются и не сохраняются.</p>
                 </form>
             </section>
             <aside class="order-card">
-                <span>Ваш заказ</span><h2>Ameli Premium</h2>
+                <span>Выбранный тариф</span><h2>Ameli Premium</h2>
                 <div class="plan-switch"><button type="button" data-plan="month">1 месяц</button><button type="button" data-plan="year" class="active">1 год <small>−37%</small></button></div>
                 <div class="order-line"><span>Пробный период</span><strong>7 дней бесплатно</strong></div>
-                <div class="order-line"><span>Затем</span><strong data-plan-price>2 990 ₽ / год</strong></div>
-                <hr><div class="order-total"><span>К оплате сегодня</span><strong>0 ₽</strong></div>
+                <div class="order-line"><span>Стоимость тарифа</span><strong data-plan-price>2 990 ₽ / год</strong></div>
                 <ul><li>Все трекеры и отчёты</li><li>Семейный доступ</li><li>Отмена в любой момент</li></ul>
                 <p>🔒 Данные передаются в зашифрованном виде.</p>
             </aside>
