@@ -56,7 +56,7 @@ if (root) {
     function entryRow(e) { const t = getType(e.type); return `<button class="entry-row" data-action="detail" data-id="${e.id}"><span style="color:${t[3]}">${icon(t[2])}</span><div><strong>${t[1]}${e.seconds ? ' · ' + duration(e.seconds) : ''}</strong><small>${timeLabel(e.start)}${e.detail ? ' · ' + escape(e.detail) : ''}${e.note ? ' · ' + escape(e.note) : ''}</small></div><span>›</span></button>`; }
     function reports() {
         const entries = filtered();
-        const tabs = `<div class="report-toolbar"><div class="segments">${[['day', 'День'], ['week', 'Неделя'], ['list', 'Список'], ['summary', 'Итоги']].map(([id, label]) => `<button data-action="report-tab" data-tab="${id}" class="${reportTab === id ? 'active' : ''}">${label}</button>`).join('')}</div>${button('filters', icon('settings'), 'icon-button')}</div><p class="period-label">Последние ${state.filters.days} дней</p>`;
+        const tabs = `<div class="report-toolbar"><div class="segments">${[['day', 'День'], ['week', 'Неделя'], ['list', 'Список'], ['summary', 'Итоги']].map(([id, label]) => `<button data-action="report-tab" data-tab="${id}" class="${reportTab === id ? 'active' : ''}">${label}</button>`).join('')}</div>${button('filters', icon('settings'), 'icon-button')}</div><div class="export-toolbar">${button('download-pdf', '↓ Скачать PDF', 'outline')}<span class="muted" role="status" data-export-status></span></div><p class="period-label">Последние ${state.filters.days} дней</p>`;
         if (!entries.length) return tabs + '<div class="empty-state">' + icon('reports') + '<h2>Пока нет записей</h2><p>Добавьте событие на главной или измените фильтры.</p>' + button('home', 'Добавить запись', 'primary') + '</div>';
         if (reportTab === 'summary') return tabs + `<div class="summary-grid">${types.filter(t => entries.some(e => e.type === t[0])).map(t => { const group = entries.filter(e => e.type === t[0]); return `<article class="summary-card"><span style="color:${t[3]}">${icon(t[2])}</span><h2>${t[1]}</h2><strong>${group.length}</strong><p>записей${group.some(e => e.seconds) ? ' · ' + duration(group.reduce((n, e) => n + (e.seconds || 0), 0)) : ''}</p></article>`; }).join('')}</div>`;
         const groups = new Map();
@@ -108,6 +108,17 @@ if (root) {
         else if (action === 'close-modal') { modal = null; render(); }
         else if (action === 'entry') openEntry(target.dataset.type);
         else if (action === 'report-tab') { reportTab = target.dataset.tab; render(); }
+        else if (action === 'download-pdf') {
+            const status = root.querySelector('[data-export-status]');
+            target.disabled = true;
+            status.textContent = 'Подготовка PDF…';
+            const snapshot = structuredClone({ profile: state.profile, filters: state.filters, entries: filtered(), types, generatedAt: new Date().toISOString() });
+            import('./report-pdf').then(module => module.downloadReport(snapshot)).then(() => {
+                status.textContent = 'PDF готов к скачиванию';
+            }).catch(() => {
+                status.textContent = 'Не удалось создать PDF. Попробуйте ещё раз.';
+            }).finally(() => { target.disabled = false; });
+        }
         else if (action === 'detail') { selectedEntry = target.dataset.id; modal = 'detail'; render(); }
         else if (action === 'delete-entry' && confirm('Удалить эту запись?')) { state.entries = state.entries.filter(e => e.id !== selectedEntry); save(); modal = null; render(); }
         else if (action === 'feeding-type') { if (state.timer && target.dataset.type !== state.timer.type) { alert('Сначала сохраните или отмените таймер.'); return; } draft.type = target.dataset.type; render(); }
