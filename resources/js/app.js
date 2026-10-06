@@ -1,4 +1,5 @@
 import './bootstrap';
+import './dashboard';
 
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.main-nav');
