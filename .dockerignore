@@ -7,3 +7,5 @@ node_modules
 public/build
 storage/logs/*
 vendor
+public/hot
+public/build
