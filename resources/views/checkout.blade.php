@@ -16,6 +16,12 @@
                 <div class="eyebrow"><span></span> Почти готово</div>
                 <h1>Оформление подписки</h1>
                 <p>Первое списание — после 7 бесплатных дней. Напомним заранее.</p>
+                @if (app()->environment('local') && config('billing.development_bypass'))
+                    <div class="form-message">
+                        <p>Режим разработки: можно продолжить без оплаты и заполнения формы.</p>
+                        <a class="button button--outline" href="{{ route('app') }}">Пропустить оплату →</a>
+                    </div>
+                @endif
                 <form action="#" method="post" data-checkout-form>
                     @csrf
                     <fieldset>

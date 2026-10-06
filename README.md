@@ -55,6 +55,21 @@ touch database/database.sqlite
 
 ## Оплата
 
+Для локальной разработки задайте в `.env`:
+
+```dotenv
+APP_ENV=local
+BILLING_DEVELOPMENT_BYPASS=true
+```
+
+После изменения настроек выполните `php artisan config:clear` (в Docker —
+`docker compose exec app php artisan config:clear`). На `/checkout` появится
+кнопка «Пропустить оплату», ведущая на стартовую страницу `/app` без заполнения
+платёжной формы. Авторизация, личный кабинет и трекеры пока не реализованы.
+Этот вход доступен только при `APP_ENV=local` и включённом флаге.
+Для production задайте `APP_ENV=production` и `BILLING_DEVELOPMENT_BYPASS=false`.
+В production `/app` возвращает 403 даже при случайно включённом флаге.
+
 Маркетинговая страница и интерфейс оформления подписки уже подготовлены. Перед
 приёмом реальных платежей необходимо выбрать и подключить платёжного провайдера
 (например, ЮKassa, CloudPayments или Stripe), настроить серверное создание платежа
