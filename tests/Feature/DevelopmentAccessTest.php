@@ -13,7 +13,7 @@ class DevelopmentAccessTest extends TestCase
         $this->withoutVite();
 
         $this->get('/checkout')->assertSee('Пропустить оплату');
-        $this->get('/app')->assertSuccessful()->assertSee('Оплата пропущена');
+        $this->get('/app')->assertSuccessful()->assertSee('Личный кабинет')->assertSee('id="dashboard"', false);
     }
 
     public function test_production_blocks_the_bypass_even_when_the_flag_is_enabled(): void
