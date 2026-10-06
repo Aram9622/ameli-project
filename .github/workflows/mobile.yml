@@ -1,0 +1,53 @@
+name: Flutter mobile
+on:
+  pull_request:
+    paths: ['mobile/**', '.github/workflows/mobile.yml']
+  push:
+    branches: [main]
+    paths: ['mobile/**', '.github/workflows/mobile.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate native runners and install dependencies
+        run: bash scripts/bootstrap.sh
+        working-directory: mobile
+      - name: Format, analyze and test
+        working-directory: mobile
+        run: |
+          dart format lib test
+          flutter analyze
+          flutter test
+      - name: Build test APK
+        run: flutter build apk --debug
+        working-directory: mobile
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ameli-android-debug
+          path: mobile/build/app/outputs/flutter-apk/app-debug.apk
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate native runners and install dependencies
+        run: bash scripts/bootstrap.sh
+        working-directory: mobile
+      - name: Build iOS simulator app
+        run: flutter build ios --simulator --debug
+        working-directory: mobile
