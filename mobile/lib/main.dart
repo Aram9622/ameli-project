@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'tracker_store.dart';
+import 'welcome_screen.dart';
 
 const navy = Color(0xff131f30), panel = Color(0xff203148);
 const lime = Color(0xff99d532), cyan = Color(0xff2ecbdc);
@@ -42,7 +43,7 @@ class AmeliApp extends StatelessWidget {
       filledButtonTheme: FilledButtonThemeData(style: FilledButton.styleFrom(
         backgroundColor: lime, foregroundColor: navy,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18)))),
-    home: Dashboard(store: store));
+    home: WelcomeScreen(dashboardBuilder: (_) => Dashboard(store: store)));
 }
 
 class Dashboard extends StatefulWidget {
